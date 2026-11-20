@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="两套用户需求研究方法的步骤级对照：哪些步骤可以互相替代、哪些不能替代、不能替代的需要准备什么、整条流程能自动化到什么程度。">
+<title>两套用户需求研究方法｜步骤可替代性与自动化评估</title>
+<style>
+:root{--ink:#202d3c;--muted:#536477;--line:#d8dfe7;--paper:#fff;--bg:#f3f5f7;--accent:#254f80;--ok:#1b6b45;--warn:#9a6209;--stop:#9c3328}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+header,main,footer{max-width:1040px;margin:auto}
+.page-header{padding:46px 28px 25px}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:650}
+h1{font-size:30px;line-height:1.35;margin:10px 0 14px}
+h2{font-size:25px;line-height:1.4;margin:6px 0 4px}
+h3{font-size:19px;line-height:1.45;margin:26px 0 10px}
+h4{font-size:16px;margin:20px 0 8px}
+p{margin:13px 0}
+.subtitle,.source{color:var(--muted)}
+.source{font-size:13px;line-height:1.65}
+.export-note{border-left:3px solid var(--accent);padding:9px 15px;background:#eaf0f7;font-size:14px}
+main{padding:0 28px 40px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:26px;margin-top:24px}
+.notice{background:#fff8e9;border-left:3px solid #b48635;padding:12px 17px;margin:16px 0}
+.toc{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;padding-top:6px}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;overflow-wrap:anywhere}
+.table-scroll{overflow-x:auto;margin:15px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.65;min-width:560px}
+td,th{padding:11px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+th{background:#f0f3f6;font-weight:650}
+tbody tr:last-child td{border-bottom:0}
+.tag{display:inline-block;font-size:12px;font-weight:650;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.t-ok{background:#e3f1e9;color:var(--ok)}
+.t-warn{background:#fdf0dc;color:var(--warn)}
+.t-stop{background:#fae6e3;color:var(--stop)}
+.t-n1{background:#e7eef7;color:var(--accent)}
+.t-n2{background:#efe8f6;color:#5b3f86}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);margin:14px 0 0}
+ul,ol{padding-left:22px}
+li{margin:7px 0}
+.kpi{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0 4px}
+.kpi div{flex:1 1 180px;border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fbfcfd}
+.kpi b{display:block;font-size:26px;line-height:1.2;color:var(--accent)}
+.kpi span{font-size:13px;color:var(--muted)}
+.footer{font-size:12px;color:var(--muted);padding:0 28px 35px}
+@media(max-width:600px){
+ body{font-size:15px}.page-header{padding:28px 16px 16px}h1{font-size:24px}h2{font-size:21px}h3{font-size:18px}
+ main{padding:0 14px 25px}.card{padding:18px 15px;margin-top:16px}td,th{padding:9px;font-size:13px}
+}
+@media print{
+ @page{size:A4;margin:14mm 12mm}
+ body{background:#fff;font:10pt/1.5 system-ui,sans-serif;color:#000}
+ .toc,.no-print{display:none!important}
+ .card{border:0;border-radius:0;padding:0;margin-top:16pt;break-inside:auto}
+ table{font-size:8.5pt}thead{display:table-header-group}tr{break-inside:avoid}
+ h2,h3,h4{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<header class="page-header">
+<div class="eyebrow">PRODUCT RESEARCH METHOD / 步骤级对照</div>
+<h1>两套用户需求研究方法<br>哪些步骤能替代、哪些不能、能自动化到什么程度</h1>
+<p class="subtitle">方法A《需求驱动型产品开发·两阶段方案》（抽油泵示例）　×　方法B《第二阶段：用户需求研究》（LED放大镜示例）</p>
+<p class="export-note">本页只对比两套方法的<strong>结构</strong>，不含任何竞品销量、报价或内部判断数据。<br>整理日期：2026-11-20</p>
+<nav class="toc">
+<a href="#map">①步骤映射总表</a>
+<a href="#onlyA">②方法A独有</a>
+<a href="#onlyB">③方法B独有</a>
+<a href="#need">④不可替代项需要你提供什么</a>
+<a href="#auto">⑤自动化评估</a>
+<a href="#pipeline">⑥全自动化需要的数据管线</a>
+<a href="#final">⑦合并后的推荐流程</a>
+<a href="#wtp">⑧付费意愿：两条路都走</a>
+</nav>
+</header>
+
+<main>
+
+<section class="card" id="map">
+<h2>① 步骤映射总表</h2>
+<p>方法A是「阶段A需求7步 + 阶段B供给7步」，方法B是「单一六步线性流程」。按功能对齐之后，关系是这样的：</p>
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th>方法A（抽油泵·两阶段）</th><th>方法B（放大镜·六步）</th><th>关系</th><th>怎么取舍</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>A1 人群地图（前半）</td><td>第一步 确定目标用户群体</td>
+<td><span class="tag t-ok">可直接替代</span></td>
+<td>用方法B。它更细：给了群体假设表、数据来源、按评论分类统计占比的具体口径</td>
+</tr>
+<tr>
+<td>A1 场景地图（后半）</td><td>第二步 识别核心使用场景</td>
+<td><span class="tag t-warn">可替代但有损失</span></td>
+<td>用方法B，但要补方法A的两个字段：<strong>购买者≠使用者</strong>、<strong>证据可信度分级</strong>（已验证／部分验证／假设）</td>
+</tr>
+<tr>
+<td>A3 证据交叉验证</td><td>第三步 真实需求和痛点</td>
+<td><span class="tag t-warn">可替代但有损失</span></td>
+<td>两边互补：方法A有证据记录格式（证据ID／任务步骤／是否跨用户重复），方法B有「用户补救行为」视角。合并用</td>
+</tr>
+<tr>
+<td>访谈（2场景×3–5人）</td><td>执行顺序里的访谈（8–12人）</td>
+<td><span class="tag t-ok">可直接替代</span></td>
+<td>量级相当，任选。都强调问「最近一次完整经过」而不是「你会不会买」</td>
+</tr>
+<tr>
+<td>B1 选样规则（12–18款，六类样本）</td><td>第四步前半（列出解决方案类型）</td>
+<td><span class="tag t-warn">可替代但有损失</span></td>
+<td>方法B的替代方案清单可用，但选样规则要换成方法A的六类（头部／腰部／高价／新品／不同技术路线／非同类）</td>
+</tr>
+<tr>
+<td>B5 缺口识别（五类+1）</td><td>第六步 找出未满足需求</td>
+<td><span class="tag t-warn">可替代但有损失</span></td>
+<td>方法B的六维筛选表能用，但缺口分类要换成方法A的五类，否则「满足代价过高」「组合不完整」这两种机会会被漏掉</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="legend">
+<span><span class="tag t-ok">可直接替代</span> 功能等价，二选一即可</span>
+<span><span class="tag t-warn">可替代但有损失</span> 主体能换，但要补字段</span>
+<span><span class="tag t-stop">不可替代</span> 一方独有，必须单独保留</span>
+</div>
+</section>
+
+<section class="card" id="onlyA">
+<h2>② 不可替代：方法A 独有（方法B完全没有）</h2>
+<p>这八项在方法B里找不到任何对应环节，删掉就是真的少了一块，不是换个说法的问题。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>独有步骤</th><th>它解决什么方法B解决不了的问题</th></tr></thead>
+<tbody>
+<tr><td><strong>A2 任务流程拆解</strong><br><span class="source">完整任务流程 × 可能失败点地图</span></td>
+<td>方法B从「场景」直接跳到「痛点」，跳过了把场景拆成一步步操作的中间层。这是唯一能发现<strong>评论里没人提、但实操中真实存在</strong>的问题的环节</td></tr>
+<tr><td><strong>A4 三层分离</strong><br><span class="source">用户需求 → 功能要求 → 产品方案，每条配可量化验证指标</span></td>
+<td>方法B到「痛点」为止，把转成产品要求推给了第三阶段。后果是需求研究的产出没法直接拿去审查竞品——<strong>因为没有统一的功能标尺</strong></td></tr>
+<tr><td><strong>A5 量化打分</strong><br><span class="source">20×(0.35I+0.20F+0.30U+0.15P)</span></td>
+<td>方法B只有高／中／低定性分档，<strong>没法横向排序</strong>，也没法回答「先做哪一个」</td></tr>
+<tr><td><strong>A7 阶段关口</strong><br><span class="source">≥2个场景且每个有可衡量功能需求，否则不准往下走</span></td>
+<td>方法B没有硬门槛，容易在证据不足时硬推进到产品设计</td></tr>
+<tr><td><strong>B3 需求×产品横向矩阵</strong></td>
+<td><strong>两套方法最大的结构差异。</strong>方法B第四步是「方案 vs 优缺点」的定性表，不是「逐条功能需求 × 每个产品」的矩阵，无法回答「某个场景需要的一组功能，有没有哪款产品能同时满足」</td></tr>
+<tr><td><strong>B4 两层评分</strong><br><span class="source">加权覆盖率公式 + 六维质量评分（有效性／效率／稳定性／适配性／体验／代价），并报告「未知」占比</span></td>
+<td>方法B完全没有。尤其是<strong>「未知不计分但必须报告占比」</strong>这条，是防止证据不足被高覆盖率掩盖的关键</td></tr>
+<tr><td><strong>B6 每个缺口3条技术路径</strong><br><span class="source">优化现有品／跨品类功能重组／重新设计，且先查是否已有人做过</span></td>
+<td>方法B只给一列「产品改进方向」，没有要求多条互斥路径，容易第一个想法就当定案</td></tr>
+<tr><td><strong>B7 全链路追溯表</strong><br><span class="source">S场景-N需求-F功能-ASIN-G缺口-C方案-EV证据</span></td>
+<td>方法B的六张表之间没有ID关联，<strong>后来人看到一个产品方案，查不回它是从哪条证据来的</strong></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card" id="onlyB">
+<h2>③ 不可替代：方法B 独有（方法A没有或极弱）</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>独有步骤</th><th>为什么方法A顶不上</th></tr></thead>
+<tbody>
+<tr><td><strong>第五步 购买动机与付费意愿</strong><br><span class="source">三概念分离：购买动机／购买决策因素／付费意愿，并给了具体测试方法</span></td>
+<td>方法A只在A5打分公式里塞了一个 P 系数（1–5分），<strong>没有独立步骤、没有概念分离、没有测量方法</strong>。而这恰恰是最容易出错的一环——用户说「希望灯更亮」不等于愿意为此多付钱</td></tr>
+<tr><td><strong>用户补救行为（workaround）</strong><br><span class="source">额外买台灯、用书垫高、反复调整、改用手机拍照放大</span></td>
+<td>方法A的证据来源清单里没有单独列这一类。补救行为是识别「产品没解决什么」的高价值线索，因为用户用脚投票比用嘴说更可信</td></tr>
+<tr><td><strong>评论分类统计的广度口径</strong><br><span class="source">10–15款竞品、200–300条评论、按群体归类计数看占比</span></td>
+<td>方法A是深度优先（每场景8–15条高质量证据看失败机制）。<strong>这两个不是替代关系，是互补</strong>：一个回答「谁占多数」，一个回答「为什么会失败」。只做一边都会偏</td></tr>
+</tbody>
+</table>
+</div>
+<div class="notice">注意第三条：两套方法的证据采集口径根本不同（广度统计 vs 深度机制），很容易被误当成「重复劳动」而砍掉一个。<strong>两个都要做</strong>，但可以用同一批评论数据跑两遍不同的分析。</div>
+</section>
+
+<section class="card" id="need">
+<h2>④ 不可替代的步骤，需要你提供什么</h2>
+<p>按「你要准备的东西」排，不按步骤顺序排。标 <span class="tag t-stop">必须人做</span> 的是AI替不了的。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>步骤</th><th>需要你提供</th><th>AI能做到哪一步</th></tr></thead>
+<tbody>
+<tr><td>A2 任务流程拆解</td>
+<td>三选一即可：①产品说明书／官方教程 ②3–5条YouTube实操视频链接 ③你或同事的实际使用经验</td>
+<td><span class="tag t-warn">半自动</span>AI出流程草稿，<strong>「这一步真会卡住吗」需要你点头一次</strong></td></tr>
+<tr><td>A4 功能要求＋量化指标</td>
+<td>行业常识确认：比如「抽油速度多少算合格」「镜片视野多大算够用」的大致区间</td>
+<td><span class="tag t-ok">近全自动</span>转化本身AI全包，只有阈值合理性要你确认</td></tr>
+<tr><td>A5 量化打分</td>
+<td>竞品价格＋销量数据（卖家精灵导出即可）</td>
+<td><span class="tag t-ok">全自动</span></td></tr>
+<tr><td>B3 需求×产品矩阵</td>
+<td>10–18款竞品的商品详情：标题、五点、A+、规格参数</td>
+<td><span class="tag t-ok">全自动</span></td></tr>
+<tr><td>B4 两层评分</td>
+<td>同上 ＋ 评论原文。<strong>实测性能需要买样品</strong></td>
+<td><span class="tag t-ok">资料层全自动</span>／<span class="tag t-stop">实测必须人做</span>，不实测就只能标「待验证」</td></tr>
+<tr><td>B6 三条技术路径</td>
+<td>无需提供；若要查「是否已有人做过」需要专利检索权限</td>
+<td><span class="tag t-warn">半自动</span>AI生成草稿，查重需要额外数据源</td></tr>
+<tr><td>B7 追溯表</td>
+<td>无</td>
+<td><span class="tag t-ok">全自动</span>，纯数据结构工作</td></tr>
+<tr><td>方法B 第五步 付费意愿<br><span class="source">已定：两条都做</span></td>
+<td>①价格段销量反推：竞品价格×销量×功能清单（已有数据）<br>②真实验证：8–12人配置价格选择 ＋ 可选的小批量投放测试<br><strong>顺序不能颠倒，详见第⑧节</strong></td>
+<td><span class="tag t-ok">①全自动</span><span class="tag t-stop">②约人谈话必须人做</span>两条都做，证据等级可到A/B</td></tr>
+<tr><td>补救行为识别</td>
+<td>评论原文</td>
+<td><span class="tag t-ok">全自动</span>，在抽取prompt里加这个维度即可</td></tr>
+<tr><td>评论广度统计</td>
+<td>10–15款竞品 × 200–300条评论（含1–3星和4–5星）</td>
+<td><span class="tag t-ok">全自动</span></td></tr>
+<tr><td>用户访谈</td>
+<td>8–12位真实用户的联系方式与时间</td>
+<td><span class="tag t-stop">必须人做</span>AI只能写访谈提纲、分析录音转写</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card" id="auto">
+<h2>⑤ 自动化评估：整条流程能自动化到什么程度</h2>
+<div class="kpi">
+<div><b>约70%</b><span>全自动：给到数据就能跑完，不需要人介入</span></div>
+<div><b>约20%</b><span>半自动：AI出草稿，人点头一次就过</span></div>
+<div><b>约10%</b><span>必须人做：访谈、实物实测、真实价格测试</span></div>
+</div>
+<h3>全自动（给数据就能跑）</h3>
+<ul>
+<li>用户群体分类与占比统计（方法B第一步）</li>
+<li>使用场景抽取与字段填表（方法B第二步）</li>
+<li>痛点抽取 ＋ 补救行为识别（方法B第三步）</li>
+<li>痛点 → 功能要求的转化（方法A A4的转化部分）</li>
+<li>需求×产品矩阵填表、四状态判定（方法A B3／B2）</li>
+<li>加权覆盖率计算、未知占比报告（方法A B4第一层）</li>
+<li>缺口五类归类（方法A B5）</li>
+<li>全链路追溯表生成（方法A B7）</li>
+</ul>
+<h3>半自动（AI草稿 ＋ 人确认一次）</h3>
+<ul>
+<li><strong>A2 任务流程与失败点</strong>——AI能从教程和评论里拼出流程，但哪一步真的会卡住需要懂行的人点头</li>
+<li><strong>A4 的量化指标阈值</strong>——「多少L/min算合格」这种数字AI不该自己定</li>
+<li><strong>B6 技术路径</strong>——AI能生成三条路径，但「这个是不是已经有人做过」需要人判断或专利检索</li>
+</ul>
+<h3>必须人做（自动化不了，别硬自动）</h3>
+<ul>
+<li><strong>用户访谈</strong>——AI可以写提纲、可以分析转写稿，但约人、谈话本身替代不了</li>
+<li><strong>实物实测</strong>——B4第二层的「实际性能」必须买样品测，不测就只能全部标「待验证」</li>
+<li><strong>真实付费意愿验证</strong>——价格测试、小批量投放看转化，这是行为数据不是文本数据</li>
+<li><strong>最终立项决策</strong>——方法A的否决原则要人来拍板</li>
+</ul>
+<div class="notice"><strong>关于「全部流程自动化」的实话：</strong>上面70%那部分完全可以做成一键跑完。但剩下30%里，半自动那20%只需要你点两次头、成本很低；真正卡住的是必须人做的10%——其中「实测」和「真实付费意愿」如果跳过，整条链路的证据等级最高只能到C（基于有限数据的推断），产出的是一份<strong>看起来完整、但关键结论都标着「待验证」</strong>的报告。<br><br><strong>本项目已决定：付费意愿两条路都走</strong>（自动反推 ＋ 真实验证），执行顺序和冲突仲裁规则见第⑧节。</div>
+</section>
+
+<section class="card" id="pipeline">
+<h2>⑥ 要做到最大自动化，需要搭的数据管线</h2>
+<p>只要下面这些能稳定导出成 CSV／JSON，整条流程就能做成「数据导入 → 自动跑完 → 两个点等人确认 → 输出全套表格」。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>#</th><th>数据项</th><th>来源</th><th>用在哪几步</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>竞品ASIN清单（10–18款，含非同类替代方案）</td><td>卖家精灵关键词反查</td><td>B1 选样</td></tr>
+<tr><td>2</td><td>商品详情：标题／五点／描述／规格／价格／销量／上架时间</td><td>卖家精灵导出</td><td>A5、B2、B3、B4</td></tr>
+<tr><td>3</td><td>评论原文，每款200–300条，1–3星与4–5星都要</td><td>卖家精灵或爬取</td><td>方法B 第一、三、五步；方法A A3</td></tr>
+<tr><td>4</td><td>商品问答 Q&amp;A</td><td>Amazon商品页</td><td>第一步用户身份、第五步购买前关注点</td></tr>
+<tr><td>5</td><td>（可选）YouTube实操视频、Reddit讨论链接</td><td>人工挑3–5条即可</td><td>A2 任务流程、A3 交叉验证</td></tr>
+<tr><td>6</td><td>一次性：行业阈值确认 ＋ 任务流程确认</td><td>你或同事，各一次</td><td>A2、A4</td></tr>
+</tbody>
+</table>
+</div>
+<p class="source">第1–4项是整条管线的地基，缺了就没法自动化；第5项缺了只影响A2的质量，可以先跑起来再补；第6项是两次点头，每次大概10分钟。</p>
+</section>
+
+<section class="card" id="final">
+<h2>⑦ 合并后的推荐流程</h2>
+<p>不要二选一，按下面这条合并线走：主干用方法B（上手门槛低、每步有示例），在三个位置嫁接方法A的硬件。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>顺序</th><th>做什么</th><th>来自</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>确定目标用户群体（含占比统计）</td><td>方法B 第一步</td></tr>
+<tr><td>2</td><td>识别核心使用场景　<span class="tag t-n1">+补字段</span></td><td>方法B 第二步 ＋ 方法A 的购买者／使用者分离、证据可信度分级</td></tr>
+<tr><td>3</td><td><strong>把场景拆成任务流程，标出每步失败点</strong>　<span class="tag t-n2">新增</span></td><td>方法A A2（方法B完全缺失）</td></tr>
+<tr><td>4</td><td>研究真实需求和痛点（含补救行为）</td><td>方法B 第三步 ＋ 方法A A3 的证据记录格式</td></tr>
+<tr><td>5</td><td><strong>痛点 → 功能要求 ＋ 可量化指标</strong>　<span class="tag t-n2">新增</span></td><td>方法A A4（这是后面矩阵的标尺，缺了第7步就做不成）</td></tr>
+<tr><td>6</td><td><strong>需求打分排序</strong>　<span class="tag t-n2">新增</span></td><td>方法A A5 公式</td></tr>
+<tr><td>7</td><td><strong>现有方案审查：需求×产品矩阵 ＋ 两层评分</strong>　<span class="tag t-n2">替换</span></td><td>方法A B2／B3/B4，<strong>替换掉</strong>方法B 第四步的定性对比表</td></tr>
+<tr><td>8</td><td>购买动机与付费意愿（三概念分离）</td><td>方法B 第五步（方法A这块很弱，必须用B的）</td></tr>
+<tr><td>9</td><td>缺口识别（五类分类）</td><td>方法B 第六步筛选表 ＋ 方法A B5 的五类框架</td></tr>
+<tr><td>10</td><td><strong>每个缺口出3条技术路径</strong>　<span class="tag t-n2">新增</span></td><td>方法A B6</td></tr>
+<tr><td>11</td><td><strong>全链路追溯表 ＋ 否决关口</strong>　<span class="tag t-n2">新增</span></td><td>方法A B7 ＋ 否决原则</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>一句话版：</strong>主干走方法B，但必须补进方法A的 <strong>A2任务流程、A4功能标尺、B3+B4矩阵评分、B7追溯表</strong> 这四块；方法B的 <strong>第五步付费意愿</strong> 必须保留不能换成方法A的打分系数。</p>
+<div class="notice">最后保留方法A的否决原则：<strong>如果已有成熟商品能合理解决，而我们无法明显降本、减步骤、提效或打开新场景，就不应该把它当作主要创新点。</strong></div>
+</section>
+
+<section class="card" id="wtp">
+<h2>⑧ 付费意愿：两条路都走的执行顺序</h2>
+<p>两条都做是对的，但<strong>顺序不能颠倒</strong>——自动那条不是用来省事的，是用来让访谈问对问题的。直接上访谈而不做第一步，你不知道该问哪几个功能、该测哪几个价位，访谈会变成泛泛而谈。</p>
+
+<h3>第一步（全自动）：从价格段销量反推假设</h3>
+<ul>
+<li><strong>输入：</strong>竞品价格 × 销量 × 功能清单——都是已有数据，不用额外收集</li>
+<li><strong>做法一：</strong>按价格带分组统计款数与销量合计，找出主流价格带和销量的跃迁点</li>
+<li><strong>做法二：</strong>在同一价位内，对比「有某功能」与「没有该功能」的产品销量差，反推这个功能的隐含溢价</li>
+<li><strong>产出：</strong>《付费意愿假设表》——哪些功能可能支撑溢价、大约多少</li>
+<li><strong>证据等级：</strong>C</li>
+</ul>
+<div class="notice"><strong>这一步的已知局限（也正是必须做第二步的理由）：</strong>同价位的销量差可能来自品牌、评论数或广告投入，不必然是功能造成的。单靠这一步得出的「用户愿意为X多付钱」，本质上是相关性，不是因果。</div>
+
+<h3>第二步（人工验证）：拿假设去验证，不要开放式提问</h3>
+<div class="table-scroll">
+<table>
+<thead><tr><th>做法</th><th>具体怎么做</th><th>得到什么</th></tr></thead>
+<tbody>
+<tr><td><span class="tag t-stop">错误</span></td><td>问「你愿意为更稳的支臂多付多少钱？」</td><td>客套话。用户不知道、也不愿意当面说不愿付</td></tr>
+<tr><td><span class="tag t-ok">正确</span></td><td>把第一步的假设做成具体的<strong>配置×价格组合</strong>，让用户在其中二选一或三选一</td><td>真实偏好。方法B第五步原文就是「展示不同配置和价格，询问用户真实选择」</td></tr>
+<tr><td><span class="tag t-ok">更强</span></td><td>小批量真实投放：真实商品页或广告，看不同配置／价位的转化率差异</td><td>行为数据，证据等级最高</td></tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>规模：</strong>8–12人，每人3–5组配置价格选择</li>
+<li><strong>证据等级：</strong>A／B</li>
+</ul>
+
+<h3>两者冲突时怎么判</h3>
+<p>只有两条都做才会遇到这个问题，所以规则必须提前定好，不能等结果出来再临时解释。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>出现的情况</th><th>多半意味着</th><th>以谁为准</th></tr></thead>
+<tbody>
+<tr><td>销量显示某功能有溢价，但访谈说不愿为它付钱</td><td>销量差来自品牌／评论数／广告，不是这个功能</td><td>以<strong>访谈</strong>为准，但要先复核访谈样本是不是偏了</td></tr>
+<tr><td>访谈说愿意付，但销量数据没有体现</td><td>典型的「口头意愿 ≠ 实际购买行为」</td><td>以<strong>行为数据</strong>为准</td></tr>
+<tr><td>两者一致</td><td>证据相互印证</td><td>证据等级升到 <strong>B</strong>；若再加上投放转化数据可到 <strong>A</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>这一节的自动化程度</h3>
+<ul>
+<li><span class="tag t-ok">全自动</span>第一步的全部计算；第二步的访谈提纲撰写、配置×价格组合设计、录音转写后的分析</li>
+<li><span class="tag t-stop">必须人做</span>约人、谈话本身；以及小批量投放的上架与投放操作</li>
+</ul>
+<p class="source">也就是说，「两条都做」实际增加的人工量，只有约人谈话这一段，加上投放测试的操作。其余环节仍然在自动化范围内。</p>
+</section>
+
+</main>
+<footer class="footer">
+<p>本页为方法论结构对照，不含任何实际竞品数据、报价或销量数字。页面可离线保存、可直接打印为PDF（每个章节自动分页）。</p>
+</footer>
+</body>
+</html>
