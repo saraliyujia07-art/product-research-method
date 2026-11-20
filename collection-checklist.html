@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="用户需求研究自动化管线的数据采集清单：每项数据的字段、来源、数量、交付格式与验收标准，可直接分配给团队执行。">
+<title>用户需求研究｜数据采集清单</title>
+<style>
+:root{--ink:#202d3c;--muted:#536477;--line:#d8dfe7;--paper:#fff;--bg:#f3f5f7;--accent:#254f80;--ok:#1b6b45;--warn:#9a6209;--stop:#9c3328}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+header,main,footer{max-width:1040px;margin:auto}
+.page-header{padding:46px 28px 25px}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:650}
+h1{font-size:30px;line-height:1.35;margin:10px 0 14px}
+h2{font-size:24px;line-height:1.4;margin:4px 0 2px}
+h3{font-size:17px;line-height:1.45;margin:22px 0 8px}
+p{margin:13px 0}
+.subtitle,.source{color:var(--muted)}
+.source{font-size:13px;line-height:1.65}
+.export-note{border-left:3px solid var(--accent);padding:9px 15px;background:#eaf0f7;font-size:14px}
+main{padding:0 28px 40px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:26px;margin-top:24px}
+.card.blocker{border-left:4px solid var(--stop)}
+.card.later{border-left:4px solid var(--warn)}
+.card.light{border-left:4px solid var(--ok)}
+.notice{background:#fff8e9;border-left:3px solid #b48635;padding:12px 17px;margin:16px 0}
+.toc{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;padding-top:6px}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;overflow-wrap:anywhere}
+.table-scroll{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.65;min-width:520px}
+td,th{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+th{background:#f0f3f6;font-weight:650}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{white-space:nowrap;font-weight:650;color:var(--muted);width:120px}
+.tag{display:inline-block;font-size:12px;font-weight:650;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.t-blocker{background:#fae6e3;color:var(--stop)}
+.t-later{background:#fdf0dc;color:var(--warn)}
+.t-light{background:#e3f1e9;color:var(--ok)}
+.fields{background:#f7f9fb;border:1px solid var(--line);border-radius:7px;padding:12px 15px;font-size:13.5px;line-height:1.9}
+.fields code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin:0 2px 3px 0;display:inline-block}
+ul,ol{padding-left:22px}
+li{margin:6px 0}
+.num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-size:15px;font-weight:650;margin-right:10px;vertical-align:middle}
+.footer{font-size:12px;color:var(--muted);padding:0 28px 35px}
+@media(max-width:600px){
+ body{font-size:15px}.page-header{padding:28px 16px 16px}h1{font-size:23px}h2{font-size:20px}
+ main{padding:0 14px 25px}.card{padding:18px 15px;margin-top:16px}td,th{padding:9px;font-size:13px}
+ td:first-child{width:auto;white-space:normal}
+}
+@media print{
+ @page{size:A4;margin:14mm 12mm}
+ body{background:#fff;font:10pt/1.5 system-ui,sans-serif;color:#000}
+ .toc,.no-print{display:none!important}
+ .card{border:0;border-radius:0;padding:0;margin-top:14pt;break-inside:avoid}
+ table{font-size:8.5pt}thead{display:table-header-group}tr{break-inside:avoid}
+ h2,h3{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<header class="page-header">
+<div class="eyebrow">DATA COLLECTION / 可直接分配执行</div>
+<h1>用户需求研究｜数据采集清单</h1>
+<p class="subtitle">这份清单采集完，整条研究流程约70%的环节可以自动跑完，剩下只需两次确认 ＋ 一轮访谈。</p>
+<p class="export-note">每一项都写明了<strong>字段、来源、数量、交付格式、验收标准</strong>，可以直接按项分配给人。<br>标 <span class="tag t-blocker">地基</span> 的三项缺了无法开工，标 <span class="tag t-later">可后补</span> 的不阻塞流程。</p>
+<nav class="toc">
+<a href="#d1">①竞品ASIN清单</a>
+<a href="#d2">②商品详情表</a>
+<a href="#d3">③评论原文</a>
+<a href="#d4">④商品问答</a>
+<a href="#d5">⑤站外证据</a>
+<a href="#d6">⑥两次人工确认</a>
+<a href="#d7">⑦访谈名单</a>
+<a href="#d8">⑧投放测试</a>
+<a href="#order">执行顺序与分工</a>
+</nav>
+</header>
+
+<main>
+
+<section class="card blocker" id="d1">
+<h2><span class="num">1</span>竞品ASIN清单　<span class="tag t-blocker">地基</span></h2>
+<div class="table-scroll">
+<table>
+<tbody>
+<tr><td>来源</td><td>卖家精灵关键词反查／竞品列表</td></tr>
+<tr><td>数量</td><td>10–18款</td></tr>
+<tr><td>交付格式</td><td>CSV，一行一个ASIN</td></tr>
+<tr><td>用在</td><td>选样（B1）；是后面所有数据的抓取入口</td></tr>
+</tbody>
+</table>
+</div>
+<h3>必须覆盖的六类样本</h3>
+<p class="source">这不是凑数量，每一类回答一个不同的问题。只抓头部会得出「市场已经很成熟」的错误结论。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>样本类型</th><th>建议款数</th><th>这类回答什么问题</th></tr></thead>
+<tbody>
+<tr><td>销量较高的成熟商品</td><td>3–4</td><td>现有主流方案已经做到什么水平</td></tr>
+<tr><td>中腰部与低价商品</td><td>3–4</td><td>低成本方案的能力边界在哪</td></tr>
+<tr><td>有销量的高价商品</td><td>2–3</td><td>哪些功能能支撑溢价</td></tr>
+<tr><td>新上架或低评论商品</td><td>2–3</td><td>新品还能不能进来、怎么进来</td></tr>
+<tr><td>不同技术路线／结构</td><td>2–3</td><td>技术路线之间的真实优劣</td></tr>
+<tr><td><strong>非同类替代方案</strong></td><td>2–3</td><td><strong>最容易被漏掉的一类。</strong>用户可能根本不买这个品类就把问题解决了</td></tr>
+</tbody>
+</table>
+</div>
+<h3>字段</h3>
+<div class="fields">
+<code>ASIN</code><code>品牌</code><code>商品标题</code><code>样本类型标签</code><code>入选理由</code><code>采集日期</code>
+</div>
+<div class="notice"><strong>验收标准：</strong>六类样本每类至少1款；非同类替代方案不少于2款；总数在10–18之间；每行都填了「入选理由」（防止凑数）。</div>
+</section>
+
+<section class="card blocker" id="d2">
+<h2><span class="num">2</span>商品详情表　<span class="tag t-blocker">地基</span></h2>
+<div class="table-scroll">
+<table>
+<tbody>
+<tr><td>来源</td><td>卖家精灵导出（按第①项的ASIN清单）</td></tr>
+<tr><td>数量</td><td>第①项清单里的每一款都要</td></tr>
+<tr><td>交付格式</td><td>CSV，一行一个ASIN</td></tr>
+<tr><td>用在</td><td>需求打分、功能实现档案、需求×产品矩阵、覆盖率评分、付费意愿第一步</td></tr>
+</tbody>
+</table>
+</div>
+<h3>字段</h3>
+<div class="fields">
+<code>ASIN</code><code>标题</code><code>五点1</code><code>五点2</code><code>五点3</code><code>五点4</code><code>五点5</code><code>商品描述/A+文案</code><code>规格参数表</code><code>当前售价</code><code>月销量估算</code><code>月销售额估算</code><code>评分</code><code>评论数</code><code>上架时间</code><code>变体数</code><code>卖家名</code><code>主图链接</code><code>数据采集日期</code>
+</div>
+<div class="notice"><strong>验收标准：</strong>
+<ul>
+<li>五点必须5条齐全，缺的写「未提供」<strong>不要留空</strong>（留空会被当成"该功能不存在"，而实际应该标"未知"）</li>
+<li>规格参数原样抄录，不要概括、不要换算单位</li>
+<li>销量字段必须标注是估算值及统计周期（如「近30天代表变体估算」）</li>
+</ul>
+</div>
+</section>
+
+<section class="card blocker" id="d3">
+<h2><span class="num">3</span>评论原文　<span class="tag t-blocker">地基</span></h2>
+<div class="table-scroll">
+<table>
+<tbody>
+<tr><td>来源</td><td>卖家精灵评论导出或爬取</td></tr>
+<tr><td>数量</td><td>每款200–300条，总计不低于2000条</td></tr>
+<tr><td>星级分布</td><td><strong>1–3星和4–5星都要</strong></td></tr>
+<tr><td>交付格式</td><td>CSV，一行一条评论</td></tr>
+<tr><td>用在</td><td>用户群体分类、场景抽取、痛点识别、补救行为识别、购买动机</td></tr>
+</tbody>
+</table>
+</div>
+<h3>字段</h3>
+<div class="fields">
+<code>ASIN</code><code>评论ID</code><code>星级</code><code>评论日期</code><code>评论标题</code><code>评论正文</code><code>是否已购认证</code><code>是否Vine</code><code>变体SKU</code><code>有用票数</code>
+</div>
+<div class="notice"><strong>验收标准：</strong>
+<ul>
+<li><strong>不要只导差评。</strong>要统计用户群体占比，只有差评会严重偏倚——差评写的人和满意的人根本不是同一批</li>
+<li>评论ID唯一、不重复（跨款去重）</li>
+<li>正文完整不截断</li>
+<li><strong>保留英文原文，不要翻译。</strong>翻译会丢掉 "Doesn't stay in place"、"Too heavy" 这类原话，而这些原话正是后面要逐条引用的证据</li>
+</ul>
+</div>
+</section>
+
+<section class="card later" id="d4">
+<h2><span class="num">4</span>商品问答 Q&amp;A　<span class="tag t-later">可后补</span></h2>
+<div class="table-scroll">
+<table>
+<tbody>
+<tr><td>来源</td><td>Amazon 商品页 Customer Questions &amp; Answers</td></tr>
+<tr><td>数量</td><td>重点抓Top 5款，能抓多少抓多少</td></tr>
+<tr><td>用在</td><td>用户身份识别、「购买前最关心什么」</td></tr>
+</tbody>
+</table>
+</div>
+<h3>字段</h3>
+<div class="fields">
+<code>ASIN</code><code>问题</code><code>回答</code><code>回答者身份(卖家/买家)</code><code>有用票数</code><code>日期</code>
+</div>
+<p class="source">这项缺了不阻塞流程，但有会明显提升「购买动机」那一步的质量——问答区是少数能看到<strong>购买前</strong>顾虑的地方，评论全是购买后的。</p>
+</section>
+
+<section class="card later" id="d5">
+<h2><span class="num">5</span>站外证据链接　<span class="tag t-later">可后补</span></h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>类型</th><th>数量</th><th>要求</th></tr></thead>
+<tbody>
+<tr><td>YouTube实操视频</td><td>3–5条</td><td><strong>要真实使用演示，不要开箱视频。</strong>能看到完整操作流程的才有用</td></tr>
+<tr><td>Reddit／专业论坛讨论</td><td>3–5条</td><td>要有用户<strong>比较不同方案</strong>的讨论，而不是单纯求推荐</td></tr>
+</tbody>
+</table>
+</div>
+<h3>字段</h3>
+<div class="fields">
+<code>链接</code><code>类型</code><code>一句话简述</code><code>为什么选它</code>
+</div>
+<p class="source">用在任务流程拆解和证据交叉验证。缺了只影响任务流程那一步的质量，可以先跑起来再补。</p>
+</section>
+
+<section class="card light" id="d6">
+<h2><span class="num">6</span>两次人工确认　<span class="tag t-light">各约10分钟</span></h2>
+<p>这两次是AI替不了的，但很轻——AI会先出草稿，你只需要判断对不对。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>确认什么</th><th>你要判断的</th><th>谁来做</th></tr></thead>
+<tbody>
+<tr><td><strong>确认一：任务流程与失败点</strong></td><td>AI拆出来的操作流程对不对、哪一步<strong>真的</strong>会卡住</td><td>懂这个品类的人，最好用过实物</td></tr>
+<tr><td><strong>确认二：量化指标的合理区间</strong></td><td>「多少算合格」的大致范围（如多少L/min、镜片视野多大算够用）</td><td>同上</td></tr>
+</tbody>
+</table>
+</div>
+<p class="source">这两个数字AI不该自己定——定错了后面整个矩阵评分的基准就是错的。</p>
+</section>
+
+<section class="card blocker" id="d7">
+<h2><span class="num">7</span>访谈名单与排期　<span class="tag t-blocker">付费意愿第二步的前提</span></h2>
+<div class="table-scroll">
+<table>
+<tbody>
+<tr><td>数量</td><td>8–12位</td></tr>
+<tr><td>来源</td><td>现有买家、垂直社群、朋友介绍、付费招募</td></tr>
+<tr><td>用在</td><td>付费意愿验证（证据等级从C升到A/B的唯一途径之一）</td></tr>
+</tbody>
+</table>
+</div>
+<h3>字段</h3>
+<div class="fields">
+<code>联系方式</code><code>符合哪个用户群体</code><code>是否实际购买过此类产品</code><code>约访时间</code>
+</div>
+<div class="notice"><strong>验收标准：</strong>至少覆盖2个重点用户群体、每个群体不少于3人；<strong>必须是真实用过这类产品的人</strong>，没用过的人回答的是想象不是经验。</div>
+<p class="source">你只需要准备<strong>人和时间</strong>。访谈提纲、配置×价格组合的设计、以及录音转写后的分析，都由AI生成，不用你写。</p>
+</section>
+
+<section class="card later" id="d8">
+<h2><span class="num">8</span>小批量投放测试　<span class="tag t-later">可选但强烈推荐</span></h2>
+<p>用真实商品页或广告，测不同配置／价位的转化率差异。</p>
+<p><strong>这是证据等级从 B 升到 A 的唯一途径</strong>——访谈拿到的是意愿，投放拿到的是行为。前面所有步骤做完，如果不做这一步，最终报告里付费意愿那一栏只能停在B级。</p>
+<p class="source">要准备的：测试用的商品页或广告素材、小额预算、以及愿意接受「这笔钱是买数据不是买销量」的预期。</p>
+</section>
+
+<section class="card" id="order">
+<h2>执行顺序与分工</h2>
+<div class="table-scroll">
+<table>
+<thead><tr><th>批次</th><th>做什么</th><th>卡不卡后面</th></tr></thead>
+<tbody>
+<tr><td>第1批</td><td>①竞品ASIN清单</td><td><strong>卡。</strong>这是所有抓取的入口，必须先定</td></tr>
+<tr><td>第2批</td><td>②商品详情 ＋ ③评论原文（可并行）</td><td><strong>卡。</strong>这两项到位，70%的自动化环节就能开跑</td></tr>
+<tr><td>第3批</td><td>④问答 ＋ ⑤站外证据</td><td>不卡。补进来会提升质量，没有也能先出初版</td></tr>
+<tr><td>第4批</td><td>⑥两次确认（AI出草稿后）</td><td>卡在功能标尺这一环，但各只要10分钟</td></tr>
+<tr><td>第5批</td><td>⑦访谈（AI先出提纲和价格组合）</td><td>卡付费意愿的证据等级，不卡其他步骤</td></tr>
+<tr><td>第6批</td><td>⑧投放测试</td><td>不卡。只影响最终证据等级能不能到A</td></tr>
+</tbody>
+</table>
+</div>
+<div class="notice"><strong>最小可开工集合：</strong>只要①②③三项到位，就能先把用户群体、场景、痛点、功能要求、需求×产品矩阵、覆盖率评分、缺口归类、追溯表这一整串自动跑出来。④⑤⑦⑧都可以边跑边补。</div>
+<h3>交付方式</h3>
+<ul>
+<li>统一放一个文件夹，CSV 或 JSON 格式</li>
+<li>文件名带采集日期，例如 <code>competitors_20261120.csv</code></li>
+<li>同一批数据不要跨多个时间点混采——价格和销量会变，混了之后没法解释</li>
+</ul>
+</section>
+
+</main>
+<footer class="footer">
+<p>本清单对应的方法论说明见 <a href="index.html">《两套用户需求研究方法｜步骤可替代性与自动化评估》</a>。本页不含任何竞品销量、报价或内部判断数据。</p>
+</footer>
+</body>
+</html>
