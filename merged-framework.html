@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="以B+细化SOP为骨架、补入A方案五处缺失件后的用户需求研究合并框架，以及合并后流程逐步的自动化评估。">
+<title>用户需求研究｜合并框架与自动化评估</title>
+<style>
+:root{--ink:#202d3c;--muted:#536477;--line:#d8dfe7;--paper:#fff;--bg:#f3f5f7;--accent:#254f80;--ok:#1b6b45;--warn:#9a6209;--stop:#9c3328;--patch:#5b3f86}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+header,main,footer{max-width:1060px;margin:auto}
+.page-header{padding:46px 28px 25px}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:650}
+h1{font-size:30px;line-height:1.35;margin:10px 0 14px}
+h2{font-size:24px;line-height:1.4;margin:4px 0 2px}
+h3{font-size:18px;line-height:1.45;margin:24px 0 8px}
+h4{font-size:16px;margin:18px 0 8px}
+p{margin:13px 0}
+.subtitle,.source{color:var(--muted)}
+.source{font-size:13px;line-height:1.65}
+.export-note{border-left:3px solid var(--accent);padding:9px 15px;background:#eaf0f7;font-size:14px}
+main{padding:0 28px 40px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:26px;margin-top:24px}
+.card.patch{border-left:4px solid var(--patch)}
+.notice{background:#fff8e9;border-left:3px solid #b48635;padding:12px 17px;margin:16px 0}
+.good{background:#eef6f1;border-left:3px solid var(--ok);padding:12px 17px;margin:16px 0}
+.toc{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;padding-top:6px}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px;overflow-wrap:anywhere}
+.table-scroll{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.65;min-width:560px}
+td,th{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+th{background:#f0f3f6;font-weight:650}
+tbody tr:last-child td{border-bottom:0}
+.tag{display:inline-block;font-size:12px;font-weight:650;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.t-auto{background:#e3f1e9;color:var(--ok)}
+.t-semi{background:#fdf0dc;color:var(--warn)}
+.t-man{background:#fae6e3;color:var(--stop)}
+.t-patch{background:#efe8f6;color:var(--patch)}
+.t-keep{background:#e7eef7;color:var(--accent)}
+ul,ol{padding-left:22px}
+li{margin:6px 0}
+.kpi{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0 4px}
+.kpi div{flex:1 1 170px;border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fbfcfd}
+.kpi b{display:block;font-size:26px;line-height:1.2;color:var(--accent)}
+.kpi span{font-size:13px;color:var(--muted)}
+.bar{display:flex;height:22px;border-radius:5px;overflow:hidden;margin:6px 0 2px;min-width:160px}
+.bar i{display:block}
+.bar .a{background:#3f9d6d}.bar .s{background:#d9a441}.bar .m{background:#c05a4e}
+.footer{font-size:12px;color:var(--muted);padding:0 28px 35px}
+@media(max-width:600px){
+ body{font-size:15px}.page-header{padding:28px 16px 16px}h1{font-size:23px}h2{font-size:20px}
+ main{padding:0 14px 25px}.card{padding:18px 15px;margin-top:16px}td,th{padding:9px;font-size:13px}
+}
+@media print{
+ @page{size:A4;margin:14mm 12mm}
+ body{background:#fff;font:10pt/1.5 system-ui,sans-serif;color:#000}
+ .toc,.no-print{display:none!important}
+ .card{border:0;border-left:0;border-radius:0;padding:0;margin-top:14pt;break-inside:auto}
+ table{font-size:8.5pt}thead{display:table-header-group}tr{break-inside:avoid}
+ h2,h3,h4{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<header class="page-header">
+<div class="eyebrow">MERGED FRAMEWORK / 以B+为骨架</div>
+<h1>用户需求研究｜合并框架与自动化评估</h1>
+<p class="subtitle">以《第二阶段用户需求研究 SOP（细化版）》为主干，补入另一套方案的五处缺失件，并对合并后的流程逐步评估自动化程度。</p>
+<p class="export-note"><strong>结论先说：</strong>B+ 已经吸收了 A 的大部分强项（任务流程、加权评分、逐步关口、需求×方案矩阵、实测对比、追溯字段），真正需要补的只有 <strong>5 处</strong>。<br>而合并之后，自动化比例<strong>反而下降</strong>——因为 B+ 的研究质量要求更高，引入了实地观察和实物任务测试。</p>
+<nav class="toc">
+<a href="#absorbed">①B+已吸收的部分</a>
+<a href="#patches">②需要补的五处</a>
+<a href="#framework">③合并后的六步框架</a>
+<a href="#auto">④自动化评估（逐步）</a>
+<a href="#human">⑤人工环节总清单</a>
+</nav>
+</header>
+
+<main>
+
+<section class="card" id="absorbed">
+<h2>① B+ 已经吸收了 A 的哪些东西（这些不用再补）</h2>
+<p>先说清楚哪些已经不是缺口了，避免重复劳动。对照之前那版「A 独有的八项」，现在只剩两项半还成立。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>A 的原有强项</th><th>B+ 里对应什么</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>A2 任务流程拆解</td><td>第二步「完整任务流程」＋刺绣场景六步流程图示例，并要求找「最耗时／容易失败／可消除」的环节</td><td><span class="tag t-keep">已吸收</span></td></tr>
+<tr><td>A5 量化打分公式</td><td>第三步痛点评分模型（严重35%＋频率25%＋任务重要性20%＋解决意愿20%）＋第六步第一层需求评分</td><td><span class="tag t-keep">已吸收</span></td></tr>
+<tr><td>A7 阶段关口</td><td><strong>比A更强</strong>：六步每一步都写了「进入下一步的条件」，不是只有一道关</td><td><span class="tag t-keep">已超越</span></td></tr>
+<tr><td>B3 需求×产品矩阵</td><td>第四步《现有解决方案与需求满足程度矩阵》</td><td><span class="tag t-semi">部分吸收</span>行是笼统需求、列是方案类型，不是可量化功能×具体ASIN</td></tr>
+<tr><td>B4 实现质量六维评分</td><td>第四步「统一任务测试」：准备时间／调整次数／清晰度／操作空间／额外工具／舒适度／成功率</td><td><span class="tag t-keep">已吸收</span>而且更偏实测</td></tr>
+<tr><td>B5 缺口五类</td><td>第四步四类：已解决／部分满足／未解决／<strong>被迫取舍</strong></td><td><span class="tag t-semi">部分吸收</span>缺「满足代价过高」一类</td></tr>
+<tr><td>B7 全链路追溯</td><td>第六步机会库（字段逐一对应前五步）＋第八节三个附加字段（证据来源／可信度／未验证假设）</td><td><span class="tag t-keep">已吸收</span></td></tr>
+<tr><td>否决原则</td><td><strong>比A更具体</strong>：第六步第二层商业与工程硬约束，并点名「LED是用电产品，若项目本来排除用电设备就不符合」</td><td><span class="tag t-keep">已超越</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="good"><strong>B+ 自己独有、A 完全没有的三件：</strong>①第三步的「底层根因」层——痛点≠产品缺陷，「看不清」可能是照明、失真、工作距离或用户视力矫正；②第五步的「实际利润」检验——售价+$5 但成本、FBA、广告涨更多，反而亏；③第六步第二层的商业与工程硬约束（含约20套小批量验证）。这三件都保留。</div>
+</section>
+
+<section class="card patch" id="patches">
+<h2>② 需要从 A 补到 B+ 的五处</h2>
+
+<h3><span class="tag t-patch">补丁 1</span>　功能要求层 ＋ 可量化验证指标　<span class="source">补在第三步之后</span></h3>
+<p>B+ 第三步的分层是 <strong>用户目标 → 用户需求 → 用户痛点 → 底层根因</strong>，走的是「往回追问题成因」的方向。A 的分层是 <strong>用户需求 → 功能要求 → 产品方案</strong>，走的是「往前定产品标准」的方向。<strong>两者不是同一个东西，B+ 缺的是后者。</strong></p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>层次</th><th>放大镜示例</th><th>谁有</th></tr></thead>
+<tbody>
+<tr><td>用户目标</td><td>清楚观察细小针脚</td><td>B+ ✓</td></tr>
+<tr><td>用户需求</td><td>放大、照明、稳定观察</td><td>B+ ✓</td></tr>
+<tr><td>用户痛点</td><td>镜头下垂，需要反复调整</td><td>B+ ✓</td></tr>
+<tr><td>底层根因</td><td>支臂承重、关节结构可能不足</td><td>B+ ✓（A无）</td></tr>
+<tr><td><strong>功能要求</strong></td><td><strong>在指定负载与姿态下，连续作业N分钟内镜头位移不超过X mm</strong></td><td><span class="tag t-patch">缺，要补</span></td></tr>
+<tr><td><strong>可量化验证指标</strong></td><td><strong>位移量(mm)／单任务调整次数／保持时长(min)</strong></td><td><span class="tag t-patch">缺，要补</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="notice"><strong>为什么这是最重要的一处：</strong>B+ 第四步的矩阵行写的是「双手操作／稳定观察／操作空间」，格子里填「待实测」。但<strong>没有功能要求层，就不知道要测什么、测到多少算合格</strong>——「稳定观察」怎么测？测到什么程度算满足？第四步的统一任务测试就落不了地。补上这一层，矩阵的行才能从笼统需求升级成可打分的标准。</div>
+
+<h3><span class="tag t-patch">补丁 2</span>　竞品选样加入「市场视角六类」　<span class="source">补在第四步</span></h3>
+<p>B+ 第四步的五类研究对象（直接竞品／同类替代／跨品类工具／临时办法／放弃使用）是<strong>用户视角</strong>——用户拿什么解决问题。A 的六类样本是<strong>市场视角</strong>——市场结构长什么样。两个视角都要。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>要补的样本类型</th><th>只有这类能回答的问题</th></tr></thead>
+<tbody>
+<tr><td>销量较高的成熟商品</td><td>主流方案已经做到什么水平</td></tr>
+<tr><td>中腰部与低价商品</td><td>低成本方案的能力边界</td></tr>
+<tr><td>有销量的高价商品</td><td>哪些功能真的能支撑溢价</td></tr>
+<tr><td><strong>新上架或低评论商品</strong></td><td><strong>新品现在还进不进得来、靠什么进来</strong>——B+ 完全没有这个视角，而它直接决定「竞争是否还有空间」</td></tr>
+<tr><td>不同动力／结构原理商品</td><td>技术路线之间的真实优劣</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3><span class="tag t-patch">补丁 3</span>　缺口分类补「满足代价过高」　<span class="source">补在第四步</span></h3>
+<p>B+ 有「已解决／部分满足／未解决／被迫取舍」四类，缺 A 的第五类：<strong>能完成任务，但价格、步骤、体积或维护负担过大</strong>。</p>
+<p>这类对应的机会方向是「优化整个使用流程」，和「被迫取舍」（改善A会损失B）不是一回事。漏掉它，一整类机会看不见——比如某方案功能齐全但每次要装拆五个零件，这不是取舍问题，是流程冗余问题。</p>
+
+<h3><span class="tag t-patch">补丁 4</span>　未知项的权重占比必须单独报告　<span class="source">补在第三、四、六步的所有评分</span></h3>
+<p>B+ 有「证据可信度」「证据状态」「未验证假设」这些字段，但<strong>没有把「未知」写进评分算法</strong>。A 的做法是硬规则：</p>
+<ul>
+<li>无法确认的项 <strong>不计入分母</strong>，单独列为「未知」</li>
+<li>报告加权得分时，<strong>必须同时报告未知项占总权重的比例</strong></li>
+<li>关键项大部分未核实时，哪怕得分很高也不能认定方案好</li>
+</ul>
+<p class="source">没有这条，第三步的痛点评分和第六步的需求评分都可能被少量已知项撑到80分以上，看起来「高优先级」，实际上是证据不足造成的假象。</p>
+
+<h3><span class="tag t-patch">补丁 5</span>　每个入选机会出三条互斥技术路径 ＋ 查重　<span class="source">补在第六步之后</span></h3>
+<p>B+ 第六步的交付表只有一列「潜在产品改进方向」（改进支臂结构／优化镜片），<strong>一个机会对应一个方向</strong>，第一个想法就成了定案。A 要求每个高价值缺口至少三条不同技术路径：</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>路径</th><th>放大镜示例</th><th>重点考察</th></tr></thead>
+<tbody>
+<tr><td>路线1：现有产品优化</td><td>沿用现结构，改进关节阻尼与配重</td><td>能否低成本快速实现</td></tr>
+<tr><td>路线2：跨产品功能重组</td><td>换一种固定方式（如配重底座＋可拆夹具双模式）</td><td>是否明显减少任务步骤</td></tr>
+<tr><td>路线3：重新设计解决方式</td><td>不做「可调支臂」，改为预设工位的定焦观察结构</td><td>是否真正改变工作流程</td></tr>
+</tbody>
+</table>
+</div>
+<p>并且每条路径必须先查<strong>市场上有没有类似方案</strong>——已经存在的不包装成原创创新。</p>
+</section>
+
+<section class="card" id="framework">
+<h2>③ 合并后的六步框架</h2>
+<p>骨架完全沿用 B+ 的六步和四问结构，<span class="tag t-patch">紫色</span>标的是从 A 补进来的件。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>步骤</th><th>保留 B+ 的</th><th>补入 A 的</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>第一步</strong><br>确定目标用户群体</td>
+<td>JTBD优先分类；购买者/使用者分离；四维评估（证据量／频率／必要程度／商业可触达性）；统一原始数据池；进入条件</td>
+<td><span class="tag t-keep">无需补充</span></td>
+</tr>
+<tr>
+<td><strong>第二步</strong><br>核心使用场景与任务流程</td>
+<td>完整任务流程＋流程图；四维判断；找最耗时/易失败/可消除环节；2–3次实地观察；进入条件</td>
+<td><span class="tag t-patch">显式失败点栏</span>每个流程步骤单列「可能失败点」与「用户真正要的结果」两栏，而不是混在痛点里</td>
+</tr>
+<tr>
+<td><strong>第三步</strong><br>真实需求与痛点</td>
+<td>四层（目标/需求/痛点/根因）；11字段证据表；痛点加权评分；三个判断错误警告；进入条件</td>
+<td><span class="tag t-patch">补丁1</span>新增 3.5 节「痛点→功能要求」，每条功能要求配可量化验证指标<br><span class="tag t-patch">补丁4</span>评分须报告未知项权重占比</td>
+</tr>
+<tr>
+<td><strong>第四步</strong><br>现有方案及其不足</td>
+<td>五类研究对象（用户视角）；统一任务测试；四类不足；需求满足程度矩阵；进入条件</td>
+<td><span class="tag t-patch">补丁2</span>加市场视角六类选样，尤其「新上架/低评论」<br><span class="tag t-patch">补丁3</span>缺口补第五类「满足代价过高」<br><span class="tag t-patch">补丁1衍生</span>矩阵行换成第三步的可量化功能要求<br><span class="tag t-patch">补丁4</span>未知占比必须报告</td>
+</tr>
+<tr>
+<td><strong>第五步</strong><br>购买动机与付费意愿</td>
+<td>八项研究内容；A/B/C配置价格选择实验；购买者/使用者区分；<strong>实际利润检验</strong>；分群体分析；进入条件</td>
+<td><span class="tag t-keep">无需补充</span>这步 B+ 明显强于 A</td>
+</tr>
+<tr>
+<td><strong>第六步</strong><br>未满足需求与产品机会</td>
+<td>六个核心问题；机会库（追溯前五步）；两层筛选（需求评分＋商业工程硬约束）；硬性约束否决；三类决策；「最可能推翻结论的事实」</td>
+<td><span class="tag t-patch">补丁5</span>每个入选机会出三条互斥技术路径，并逐条查市场是否已有<br><span class="tag t-patch">补丁4</span>第一层评分须报告未知占比</td>
+</tr>
+<tr>
+<td><strong>贯穿</strong></td>
+<td>统一原始证据库；三个附加字段（来源／可信度／未验证假设）；完成标准是能回答一个完整问句</td>
+<td><span class="tag t-patch">追溯ID化</span>把 B+ 的字段关联升级成显式ID链：<code>S场景-N需求-F功能-G缺口-C方案-EV证据</code>，每个方案可一路倒查到原始评论</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card" id="auto">
+<h2>④ 合并后流程的自动化评估</h2>
+<div class="notice"><strong>先说一个反直觉的结论：</strong>合并之后自动化比例<strong>比老版本低</strong>。老版本（旧B＋A补丁）估的是 70%全自动；合并后约 <strong>60%</strong>。原因不是方法变差了，而是 B+ 明确要求了两件老版本没有的人工动作——<strong>实地观察任务流程</strong>和<strong>实物统一任务测试</strong>。研究质量上去了，人工占比自然上去。</div>
+<div class="kpi">
+<div><b>约60%</b><span>全自动：给数据就能跑</span></div>
+<div><b>约20%</b><span>半自动：AI出草稿，人确认</span></div>
+<div><b>约20%</b><span>必须人做：观察、实测、访谈</span></div>
+</div>
+
+<h3>逐步拆解</h3>
+<div class="table-scroll">
+<table>
+<thead><tr><th>步骤</th><th>自动化构成</th><th>全自动能做的</th><th>必须人做的</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>第一步</strong><br>用户群体</td>
+<td><div class="bar"><i class="a" style="width:95%"></i><i class="s" style="width:5%"></i></div><span class="source">95% 自动</span></td>
+<td>从评论/问答/论坛抽取用户身份与任务、分类计数、四维打分、生成优先级表</td>
+<td>扫一眼分类结果是否离谱</td>
+</tr>
+<tr>
+<td><strong>第二步</strong><br>场景与任务流程</td>
+<td><div class="bar"><i class="a" style="width:55%"></i><i class="s" style="width:20%"></i><i class="m" style="width:25%"></i></div><span class="source">55% 自动</span></td>
+<td>从评论/视频/说明书拼任务流程草稿、场景字段填表、四维判断</td>
+<td><strong>2–3次实地观察</strong>（B+明确要求，AI替代不了）；确认失败点是否真实</td>
+</tr>
+<tr>
+<td><strong>第三步</strong><br>需求痛点＋功能要求</td>
+<td><div class="bar"><i class="a" style="width:80%"></i><i class="s" style="width:20%"></i></div><span class="source">80% 自动</span></td>
+<td>11字段证据表填充、痛点加权评分、根因假设生成、未知占比计算、功能要求的文字转化</td>
+<td><strong>定量化指标的阈值</strong>（位移多少mm算合格、多少次调整算频繁）——这个数字AI不该自己定</td>
+</tr>
+<tr>
+<td><strong>第四步</strong><br>现有方案</td>
+<td><div class="bar"><i class="a" style="width:40%"></i><i class="s" style="width:10%"></i><i class="m" style="width:50%"></i></div><span class="source">40% 自动</span></td>
+<td>按六类规则选样、商品详情功能状态判定（已实现/部分/未实现/未知）、矩阵填表、未知权重占比</td>
+<td><strong>统一任务测试必须买实物手动测</strong>：准备时间、调整次数、清晰度、操作空间、舒适度、成功率。<strong>这是整个流程人工占比最高的一步</strong></td>
+</tr>
+<tr>
+<td><strong>第五步</strong><br>购买动机与付费意愿</td>
+<td><div class="bar"><i class="a" style="width:50%"></i><i class="s" style="width:15%"></i><i class="m" style="width:35%"></i></div><span class="source">50% 自动</span></td>
+<td>从评论/问答抽取动机与决策因素、价格段销量反推、A/B/C方案与价格组合设计、给定成本参数后的利润测算</td>
+<td>访谈8–12人；价格选择实验的实际执行；提供工厂报价等成本参数</td>
+</tr>
+<tr>
+<td><strong>第六步</strong><br>机会筛选</td>
+<td><div class="bar"><i class="a" style="width:65%"></i><i class="s" style="width:20%"></i><i class="m" style="width:15%"></i></div><span class="source">65% 自动</span></td>
+<td>第一层需求评分、机会库汇总、ID追溯链生成、三条技术路径草稿</td>
+<td>第二层商业约束要你给成本/FBA/广告数据；硬性约束判断（这个项目能不能做用电产品）；最终决策</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="source">条形图中绿色=全自动、黄色=半自动、红色=必须人做，比例为工作量粗估，用于排优先级，不是精确测算。</p>
+</section>
+
+<section class="card" id="human">
+<h2>⑤ 人工环节总清单</h2>
+<p>把上表里所有红色和黄色的部分抽出来，这就是「自动化之外你必须安排的事」。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>环节</th><th>在哪一步</th><th>投入</th><th>不做的后果</th></tr></thead>
+<tbody>
+<tr><td><span class="tag t-man">实地观察任务流程</span></td><td>第二步</td><td>每个重点群体2–3次，每次约1小时</td><td>只能拿到评论里写出来的问题，隐性操作摩擦发现不了</td></tr>
+<tr><td><span class="tag t-semi">确认失败点是否真实</span></td><td>第二步</td><td>约10分钟</td><td>AI拼的流程可能有想当然的环节</td></tr>
+<tr><td><span class="tag t-semi">定量化指标阈值</span></td><td>第三步</td><td>约10分钟</td><td>第四步不知道测什么、多少算合格，矩阵落不了地</td></tr>
+<tr><td><span class="tag t-man">实物统一任务测试</span></td><td>第四步</td><td>买样品 ＋ 每款约30分钟</td><td>矩阵全是「待实测」，证据等级封顶在C</td></tr>
+<tr><td><span class="tag t-man">用户访谈</span></td><td>第五步</td><td>8–12人</td><td>付费意愿只能靠价格段销量反推，证据等级封顶在C</td></tr>
+<tr><td><span class="tag t-man">价格选择实验</span></td><td>第五步</td><td>随访谈一起做</td><td>溢价判断无依据</td></tr>
+<tr><td><span class="tag t-semi">提供成本参数</span></td><td>第五、六步</td><td>工厂报价2–3家</td><td>实际利润检验和第二层商业筛选都跑不了</td></tr>
+<tr><td><span class="tag t-man">硬性约束与最终决策</span></td><td>第六步</td><td>一次会议</td><td>——这本来就该人拍板</td></tr>
+</tbody>
+</table>
+</div>
+<div class="notice"><strong>最小启动集：</strong>只要有竞品清单＋商品详情＋评论原文，第一、三、六步可以先跑完，第二、四、五步出半成品（带「待实测」「待访谈」标记）。先拿到一版完整骨架，再用人工环节逐个把证据等级从 C 提到 A/B，比等齐所有材料再开工更实际。</div>
+</section>
+
+</main>
+<footer class="footer">
+<p>配套文件：<a href="index.html">两套方法的步骤可替代性对照</a>　·　<a href="collection-checklist.html">数据采集清单</a></p>
+<p>本框架以《第二阶段用户需求研究 SOP（细化版）》为骨架，补入另一套两阶段方案的五处缺失件。所有评分权重与自动化比例均为研究排序工具，不代表成功概率或精确测算。本页不含任何竞品销量、报价或内部判断数据。</p>
+</footer>
+</body>
+</html>
