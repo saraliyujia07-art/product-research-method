@@ -4,6 +4,7 @@
 
 - **合并框架与自动化评估** → https://saraliyujia07-art.github.io/product-research-method/merged-framework.html
 - **两套方法步骤对照** → https://saraliyujia07-art.github.io/product-research-method/
+- **开工清单与中途待办** → https://saraliyujia07-art.github.io/product-research-method/handover-checklist.html
 - **数据采集清单** → https://saraliyujia07-art.github.io/product-research-method/collection-checklist.html
 
 > ⚠️ 本仓库里的 `.html` 是源文件，在 GitHub 上点开会显示成**代码**。
@@ -15,9 +16,10 @@
 |---|---|
 | `merged-framework.html` | **主文件**。以细化版六步SOP为骨架，补入另一套方案的五处缺失件，给出合并后的完整框架，以及逐步的自动化评估（约60%全自动 / 20%半自动 / 20%必须人工） |
 | `index.html` | 两套方法的步骤级对照：哪些能互相替代、哪些不能、不可替代项需要准备什么 |
+| `handover-checklist.html` | 跑合并框架时的交接清单：开工前必须给的五项、两件要提前启动的长周期事（样品采购／访谈招募）、中途按触发点会找你要的东西，以及每项缺失的后果 |
 | `collection-checklist.html` | 配套的数据采集清单：8项数据各自的字段、来源、数量、交付格式与验收标准，可直接按项分配执行 |
 
-三个页面底部互相有链接。都支持直接打印成 PDF（按章节自动分页）。
+四个页面底部互相有链接。都支持直接打印成 PDF（按章节自动分页）。
 
 ## 提建议
 
