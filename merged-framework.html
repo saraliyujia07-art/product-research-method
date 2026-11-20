@@ -73,6 +73,19 @@ li{margin:6px 0}
  table{font-size:8.5pt}thead{display:table-header-group}tr{break-inside:avoid}
  h2,h3,h4{break-after:avoid}
 }
+
+.layout{max-width:1300px;margin:auto;display:flex;gap:26px;align-items:flex-start;padding:0 28px}
+.layout main{max-width:none;margin:0;padding:0 0 40px;flex:1;min-width:0}
+.sidebar{flex:0 0 218px;position:sticky;top:16px;margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:15px 12px;font-size:13.5px;line-height:1.45;max-height:calc(100vh - 36px);overflow-y:auto}
+.sidebar b{display:block;font-size:11px;letter-spacing:.1em;color:var(--muted);margin:0 0 9px 8px;font-weight:650}
+.sidebar a{display:block;padding:6px 9px;margin:1px 0;border-radius:6px;text-decoration:none;color:var(--ink);border-left:2px solid transparent}
+.sidebar a:hover{background:#f0f3f6}
+.sidebar a.active{background:#eaf0f7;border-left-color:var(--accent);color:var(--accent);font-weight:650}
+.sidebar a.sub{padding-left:20px;font-size:12.5px;color:var(--muted)}
+.sidebar a.sub.active{color:var(--accent)}
+@media(max-width:900px){.layout{display:block;padding:0 14px}.sidebar{display:none}.layout main{padding:0 0 25px}}
+@media(min-width:901px){.page-header .toc{display:none}}
+@media print{.sidebar{display:none!important}.layout{display:block;padding:0}}
 </style>
 </head>
 <body>
@@ -92,6 +105,24 @@ li{margin:6px 0}
 </nav>
 </header>
 
+<div class="layout">
+<nav class="sidebar" aria-label="目录">
+<b>目录</b>
+<a href="#t0">①开工前必须给的五项</a>
+<a href="#lead">②现在就要启动的两件事</a>
+<a href="#why5">③为什么只补五处</a>
+<a href="#patches">④五处补丁详解</a>
+<a href="#steps">⑤六步详解（含交接与自动化）</a>
+<a class="sub" href="#s1">　1. 确定目标用户群体</a>
+<a class="sub" href="#s2">　2. 核心使用场景与任务流程</a>
+<a class="sub" href="#s3">　3. 真实需求与痛点</a>
+<a class="sub" href="#s4">　4. 现有解决方案及其不足</a>
+<a class="sub" href="#s5">　5. 购买动机与付费意愿</a>
+<a class="sub" href="#s6">　6. 未满足需求与产品机会</a>
+<a class="sub" href="#s7">　贯穿全程</a>
+<a href="#auto">⑥自动化总览</a>
+<a href="#miss">⑦缺失后果对照</a>
+</nav>
 <main>
 
 <section class="card t0" id="t0">
@@ -220,7 +251,7 @@ li{margin:6px 0}
 <p>每一步四块：<strong>保留什么</strong>（SOP原有）、<strong>补什么</strong>（从另一套补入）、<strong>要你给什么</strong>（交接点）、<strong>自动化多少</strong>。</p>
 </div>
 
-<div class="step">
+<div class="step" id="s1">
 <h3><span class="stepnum">1</span>确定目标用户群体</h3>
 <h4>保留</h4>
 <p>JTBD 优先分类再补人口特征；购买者／使用者分离；四维评估（群体证据量／任务发生频率／需求必要程度／商业可触达性）；统一原始数据池；进入下一步的条件。</p>
@@ -233,7 +264,7 @@ li{margin:6px 0}
 <p class="barlab"><strong>95% 全自动</strong>——抽取用户身份与任务、分类计数、四维打分、生成优先级表，全部可跑。</p>
 </div>
 
-<div class="step">
+<div class="step" id="s2">
 <h3><span class="stepnum">2</span>核心使用场景与任务流程</h3>
 <h4>保留</h4>
 <p>完整任务流程＋流程图；四维判断（场景重复性／工具必要性／任务复杂度／现有操作摩擦）；找最耗时、易失败、可消除的环节；2–3次实地观察；进入条件。</p>
@@ -247,7 +278,7 @@ li{margin:6px 0}
 <p class="barlab"><strong>55% 全自动</strong>——流程草稿、场景字段、四维判断可跑；<strong>实地观察 AI 替代不了</strong>，框架明确要求「实际操作观察比阅读评论更适合识别隐性需求」。</p>
 </div>
 
-<div class="step">
+<div class="step" id="s3">
 <h3><span class="stepnum">3</span>真实需求与痛点　<span class="tag t-patch">＋功能要求</span></h3>
 <h4>保留</h4>
 <p>四层区分（用户目标／用户需求／用户痛点／底层根因）；11字段证据表（含原始表述、补救行为、推测根因、证据状态）；痛点加权评分；三个判断错误警告；进入条件。</p>
@@ -261,7 +292,7 @@ li{margin:6px 0}
 <p class="barlab"><strong>80% 全自动</strong>——证据表填充、加权评分、根因假设、未知占比、功能要求的文字转化均可跑，只有阈值要人定。</p>
 </div>
 
-<div class="step">
+<div class="step" id="s4">
 <h3><span class="stepnum">4</span>现有解决方案及其不足　<span class="tag t-man">人工最重的一步</span></h3>
 <h4>保留</h4>
 <p>五类研究对象（直接竞品／同类替代／跨品类工具／临时办法／放弃使用）；统一任务测试；四类不足；《现有解决方案与需求满足程度矩阵》；进入条件。</p>
@@ -278,7 +309,7 @@ li{margin:6px 0}
 <p class="barlab"><strong>40% 全自动</strong>——选样、功能状态判定（已实现/部分/未实现/未知）、矩阵填表、未知占比可跑；<strong>实物测试必须手动做</strong>，不做的话矩阵全是「待实测」，证据等级封顶 C。</p>
 </div>
 
-<div class="step">
+<div class="step" id="s5">
 <h3><span class="stepnum">5</span>购买动机与付费意愿</h3>
 <h4>保留</h4>
 <p>八项研究内容；A/B/C 配置价格选择实验；购买者／使用者区分；<strong>实际利润检验</strong>（售价+$5 但成本、FBA、广告涨更多反而亏）；分群体分析；进入条件须区分「声称愿买」与「实际购买」。</p>
@@ -292,7 +323,7 @@ li{margin:6px 0}
 <p class="barlab"><strong>50% 全自动</strong>——动机与决策因素抽取、价格段销量反推、A/B/C方案设计、给定成本后的利润测算可跑；访谈与价格实验必须人做。</p>
 </div>
 
-<div class="step">
+<div class="step" id="s6">
 <h3><span class="stepnum">6</span>未满足需求与产品机会</h3>
 <h4>保留</h4>
 <p>六个核心问题；机会库（字段逐一对应前五步）；两层筛选（第一层需求评分＋第二层商业与工程硬约束，含约20套小批量验证）；硬性约束否决；三类决策（优先开发验证／继续研究验证／暂时淘汰）；必须回答「最可能推翻结论的事实是什么」。</p>
@@ -308,7 +339,7 @@ li{margin:6px 0}
 <p class="barlab"><strong>65% 全自动</strong>——第一层评分、机会库汇总、ID追溯链、三条路径草稿可跑；第二层要你给商业参数，硬约束判断和最终决策是人的事。</p>
 </div>
 
-<div class="step" style="border-top-color:var(--muted)">
+<div class="step" id="s7" style="border-top-color:var(--muted)">
 <h3>贯穿全程</h3>
 <h4>保留</h4>
 <p>统一原始证据库（六步共用一套，避免重复采集）；三个附加字段（证据来源／证据可信度／尚未验证的假设）；完成标准是能回答一个完整问句，而不是做完几张表。</p>
@@ -363,9 +394,27 @@ li{margin:6px 0}
 </section>
 
 </main>
+</div>
 <footer class="footer">
 <p>配套文件：<a href="index.html">两套方法的步骤可替代性对照</a>　·　<a href="collection-checklist.html">数据采集清单（字段级）</a></p>
 <p>本框架以《第二阶段用户需求研究 SOP（细化版）》为骨架，补入另一套两阶段方案的五处缺失件。所有评分权重、自动化比例与周期估算均为研究排序与排期工具，不代表成功概率或精确测算。本页不含任何竞品销量、报价或内部判断数据。</p>
 </footer>
+
+<script>
+(function(){
+ var links=[].slice.call(document.querySelectorAll('.sidebar a'));
+ if(!links.length)return;
+ var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+ function spy(){
+  var cur=-1;
+  for(var i=0;i<targets.length;i++){ if(targets[i]&&targets[i].getBoundingClientRect().top<=140) cur=i; }
+  if(cur<0)cur=0;
+  links.forEach(function(a,i){ a.classList.toggle('active', i===cur); });
+ }
+ document.addEventListener('scroll',spy,{passive:true});
+ window.addEventListener('resize',spy);
+ spy();
+})();
+</script>
 </body>
 </html>

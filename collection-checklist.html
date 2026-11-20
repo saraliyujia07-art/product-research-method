@@ -58,6 +58,19 @@ li{margin:6px 0}
  table{font-size:8.5pt}thead{display:table-header-group}tr{break-inside:avoid}
  h2,h3{break-after:avoid}
 }
+
+.layout{max-width:1300px;margin:auto;display:flex;gap:26px;align-items:flex-start;padding:0 28px}
+.layout main{max-width:none;margin:0;padding:0 0 40px;flex:1;min-width:0}
+.sidebar{flex:0 0 218px;position:sticky;top:16px;margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:15px 12px;font-size:13.5px;line-height:1.45;max-height:calc(100vh - 36px);overflow-y:auto}
+.sidebar b{display:block;font-size:11px;letter-spacing:.1em;color:var(--muted);margin:0 0 9px 8px;font-weight:650}
+.sidebar a{display:block;padding:6px 9px;margin:1px 0;border-radius:6px;text-decoration:none;color:var(--ink);border-left:2px solid transparent}
+.sidebar a:hover{background:#f0f3f6}
+.sidebar a.active{background:#eaf0f7;border-left-color:var(--accent);color:var(--accent);font-weight:650}
+.sidebar a.sub{padding-left:20px;font-size:12.5px;color:var(--muted)}
+.sidebar a.sub.active{color:var(--accent)}
+@media(max-width:900px){.layout{display:block;padding:0 14px}.sidebar{display:none}.layout main{padding:0 0 25px}}
+@media(min-width:901px){.page-header .toc{display:none}}
+@media print{.sidebar{display:none!important}.layout{display:block;padding:0}}
 </style>
 </head>
 <body>
@@ -79,6 +92,19 @@ li{margin:6px 0}
 </nav>
 </header>
 
+<div class="layout">
+<nav class="sidebar" aria-label="目录">
+<b>目录</b>
+<a href="#d1">①竞品ASIN清单</a>
+<a href="#d2">②商品详情表</a>
+<a href="#d3">③评论原文</a>
+<a href="#d4">④商品问答</a>
+<a href="#d5">⑤站外证据</a>
+<a href="#d6">⑥两次人工确认</a>
+<a href="#d7">⑦访谈名单</a>
+<a href="#d8">⑧投放测试</a>
+<a href="#order">执行顺序与分工</a>
+</nav>
 <main>
 
 <section class="card blocker" id="d1">
@@ -269,8 +295,26 @@ li{margin:6px 0}
 </section>
 
 </main>
+</div>
 <footer class="footer">
 <p>本清单对应的方法论说明见 <a href="index.html">《两套用户需求研究方法｜步骤可替代性与自动化评估》</a>，完整执行框架见 <a href="merged-framework.html">《完整执行框架》</a>（含开工清单与中途待办）。本页不含任何竞品销量、报价或内部判断数据。</p>
 </footer>
+
+<script>
+(function(){
+ var links=[].slice.call(document.querySelectorAll('.sidebar a'));
+ if(!links.length)return;
+ var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+ function spy(){
+  var cur=-1;
+  for(var i=0;i<targets.length;i++){ if(targets[i]&&targets[i].getBoundingClientRect().top<=140) cur=i; }
+  if(cur<0)cur=0;
+  links.forEach(function(a,i){ a.classList.toggle('active', i===cur); });
+ }
+ document.addEventListener('scroll',spy,{passive:true});
+ window.addEventListener('resize',spy);
+ spy();
+})();
+</script>
 </body>
 </html>
